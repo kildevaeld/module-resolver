@@ -20,7 +20,7 @@ export namespace resolver {
      * @returns 
      */
     export async function lookup(prefix: string) {
-        var generatorsModules = await findGeneratorsIn(getNpmPaths(), prefix);
+        var generatorsModules = await findModulesIn(getNpmPaths(), prefix);
         var patterns: string[] = [];
 
         let files = lookups.forEach(function (lookup) {
@@ -28,7 +28,6 @@ export namespace resolver {
                 patterns.push(Path.join(modulePath, lookup));
             });
         });
-
 
         const found: { [key: string]: boolean } = {};
         return _.flatten(await Promise.all(patterns.map(pattern => {
@@ -50,14 +49,14 @@ export namespace resolver {
     }
 
     /**
-     * Search npm for every available generators.
-     * Generators are npm packages who's name start with `generator-` and who're placed in the
+     * Search npm for every available module.
+     * Generators are npm packages who's name start with `<prfefix>-` and who're placed in the
      * top level `node_module` path. They can be installed globally or locally.
      *
      * @param {Array}  List of search paths
      * @return {Array} List of the generator modules path
      */
-    async function findGeneratorsIn(searchPaths: string[], prefix: string): Promise<string[]> {
+    async function findModulesIn(searchPaths: string[], prefix: string): Promise<string[]> {
         var modules = [];
         return _.flatten(await Promise.all(searchPaths.map(root => {
             return globby([
