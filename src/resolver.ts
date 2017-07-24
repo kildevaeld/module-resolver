@@ -29,12 +29,6 @@ export namespace resolver {
             });
         });
 
-        /*let out: (string | null)[] = [];
-        patterns.forEach((pattern) => {
-            globby.sync('package.json', { cwd: pattern }).forEach((filename: string) => {
-                out.push(tryRegistering(Path.join(pattern, filename)))
-            })
-        });*/
 
         const found: { [key: string]: boolean } = {};
         return _.flatten(await Promise.all(patterns.map(pattern => {
@@ -65,16 +59,12 @@ export namespace resolver {
      */
     async function findGeneratorsIn(searchPaths: string[], prefix: string): Promise<string[]> {
         var modules = [];
-
-        for (let root of searchPaths) {
-            let match = await globby([
+        return _.flatten(await Promise.all(searchPaths.map(root => {
+            return globby([
                 `${prefix}-*`,
                 `@*/${prefix}-*`
-            ], { cwd: root });
-            modules.push(...match.map(m => Path.join(root, m)))
-        }
-
-        return modules;
+            ], { cwd: root }).then(m => m.map(m => Path.join(root, m)))
+        })));
     };
     /**
      * Try registering a Generator to this environment.
@@ -94,7 +84,4 @@ export namespace resolver {
 
         return null;
     };
-
-
-
 }
