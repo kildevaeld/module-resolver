@@ -1,0 +1,29 @@
+{
+  "name": "module-resolver",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "@types/debug": "0.0.29",
+    "@types/globby": "^0.6.0",
+    "@types/lodash": "^4.14.71",
+    "@types/mz": "0.0.31",
+    "@types/node": "^8.0.16",
+    "gulp": "^3.9.1",
+    "gulp-bump": "^2.7.0",
+    "gulp-typescript": "^3.2.1"
+  },
+  "dependencies": {
+    "debug": "^2.6.8",
+    "global-modules": "^1.0.0",
+    "globby": "^6.1.0",
+    "lodash": "^4.17.4",
+    "mz": "^2.6.0"
+  },
+  "types": "lib/index.d.ts"
+}
