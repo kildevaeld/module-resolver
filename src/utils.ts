@@ -31,11 +31,6 @@ export function getNpmPaths() {
     paths.push(Path.join(__dirname, '../../../..'));
     paths.push(Path.join(__dirname, '../..'));
 
-    // adds support for generator resolving when yeoman-generator has been linked
-    if (process.argv[1]) {
-        paths.push(Path.join(Path.dirname(process.argv[1]), '../..'));
-    }
-
     // Default paths for each system
     if (win32) {
         paths.push(Path.join(process.env.APPDATA!, 'npm/node_modules'));
