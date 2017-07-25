@@ -19,17 +19,18 @@ export namespace resolver {
      * @param {string} prefix 
      * @returns 
      */
-    export async function lookup(prefix: string) {
+    export async function lookup(prefix: string, looksies: string[] = []) {
         var generatorsModules = await findModulesIn(getNpmPaths(), prefix);
         var patterns: string[] = [];
 
-        let files = lookups.forEach(function (lookup) {
+        let files = looksies.concat(lookups).forEach(function (lookup) {
             generatorsModules.forEach(function (modulePath) {
                 patterns.push(Path.join(modulePath, lookup));
             });
         });
 
         const found: { [key: string]: boolean } = {};
+
         return _.flatten(await Promise.all(patterns.map(pattern => {
             return globby('package.json', { cwd: pattern })
                 .then(m => m.map(m => tryRegistering(Path.join(pattern, m))))

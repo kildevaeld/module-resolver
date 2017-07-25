@@ -7,7 +7,7 @@ export declare namespace resolver {
      * @param {string} prefix
      * @returns
      */
-    function lookup(prefix: string): Promise<{
+    function lookup(prefix: string, looksies?: string[]): Promise<{
         path: string | null;
         pkgjson: any;
     }[]>;
